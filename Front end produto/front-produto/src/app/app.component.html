@@ -1,0 +1,98 @@
+<app-nav-bar></app-nav-bar>
+
+<br />
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">
+        <h4>Produtos</h4>
+        <form [formGroup]="produtoForm" (ngSubmit)="salvar()">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" formControlName="nome">
+          </div>
+          <br />
+          <div class="form-group">
+            <label for="valor">Preço</label>
+            <input type="number" class="form-control" id="valor" formControlName="valor">
+          </div>
+          <br />
+          <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <textarea nome="" id="descricao" formControlName="descricao" rows="3" class="form-control"></textarea>
+          </div>
+          <br />
+          <button class="btn btn-primary" [disabled]="produtoForm.invalid">Salvar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">
+        <h4>Lista de Produtos</h4>
+      </div>
+      <table class="table">
+        <thead>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Editar</th>
+          <th>Deletar</th>
+        </thead>
+        <tr *ngFor="let produto of produtos">
+          <td>{{produto.nome}}</td>
+          <td>{{produto.valor}}</td>
+          <!-- <td>{{produto.descricao}}</td> -->
+          <td style="width: 100px;">
+            <div>
+              <button (click)="open(mymodal, produto)" class="btn btn-danger btn-sm" type="button">Editar</button>
+              <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">Editar</button> -->
+
+              <ng-template #mymodal let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <form [formGroup]="produtoFormUp">
+                  <div class="modal-body">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" formControlName="nome" id="nome">
+                  </div>
+
+                  <div class="modal-body">
+                    <label for="valor">Preço</label>
+                    <input type="number" class="form-control" formControlName="valor" id="valor">
+                  </div>
+
+                  <div class="modal-body">
+                    <label for="descricao">Descrição</label>
+                    <input type="texte" class="form-control" formControlName="descricao" id="descricao">
+                  </div>
+                </form>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+                  <button type="submit" class="btn btn-primary" (click)="update(produto)">Save changes</button>
+                </div>
+              </ng-template>
+
+            </div>
+          </td>
+          <td style="width: 100px;">
+            <div>
+              <button (click)="remover(produto)" class="btn btn-danger btn-sm" type="button">Remover</button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<br />
